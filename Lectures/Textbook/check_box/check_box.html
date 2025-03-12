@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check_Box</title>
+    <script type="text/javascript">
+        function gg(){
+            var n = document.forms[0].sex.length;
+            for(var i = 0; i < n; i++){
+                if(document.forms[0].sex[i].checked){
+                    alert(document.forms[0].sex[i].value);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form action="">
+        <input type="radio" name="sex" value="male" onclick="gg()"/>Male
+        <input type="radio" name="sex" value="female"  onclick="gg()"/>Female
+    </form>
+</body>
+</html>

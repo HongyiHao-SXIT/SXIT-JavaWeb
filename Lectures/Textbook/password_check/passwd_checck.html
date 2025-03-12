@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passwd_check</title>
+    <script type="text/javascript">
+        function valid(form){
+            if(form.password.value.length == 0){
+                alert("Please enter a password");
+                form.password.focus();
+                return false;
+            }
+            if(form.password.value.length < 6){
+                alert("Password must be at least 6 characters");
+                form.password.focus();
+                return false;
+            }
+            var exp = /^[a-z0-9]+$/;
+            if(!exp.test(form.password.value)){
+                alert("Password contains illegal characters");
+                form.password.focus();
+                return false;
+            }
+            alert("OK, password");
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <form action="">
+        Enter your password:
+        <input name="password" type="password"/>
+        <input type="button" value="submit password" onclick="valid(this.form)"/>
+    </form>
+</body>
+</html>
