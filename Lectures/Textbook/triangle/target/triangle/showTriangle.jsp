@@ -17,8 +17,8 @@
         <p>Side C: <jsp:getProperty name="triangle" property="sideC"/></p>
         
         <% if (triangle.isValid()) { %>
-            <p><strong>Perimeter:</strong> <%= triangle.getPerimeter() %></p>
-            <p><strong>Area:</strong> <%= triangle.getArea() %></p>
+            <p><strong>Perimeter:</strong> <%= String.format("%.2f", triangle.getPerimeter()) %></p>
+            <p><strong>Area:</strong> <%= String.format("%.2f", triangle.getArea()) %></p>
         <% } else { %>
             <p class="error">Error: The entered sides cannot form a valid triangle!</p>
             <p class="error">Please ensure the sum of any two sides is greater than the third side.</p>
