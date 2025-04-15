@@ -5,10 +5,6 @@ This is a repository that contains the content of the Javaweb course for the six
 ```
 sxit-Java_web/
 ├── Lectures/   //Class content
-│   ├── Record/     //Class record
-│   │   ├── Date/
-│   │   │   │   ├── JavaWeb_Date_P1.wav   //Part 1 of every class
-│   │   │   │   ├── JavaWeb_Date_P2.wav   //Part 2 of every class
 │   ├── Textbook/   //Code and practice in textbook
 │   │   ├── Practicel[]/
 │   │   │   ├── practicel[].html
