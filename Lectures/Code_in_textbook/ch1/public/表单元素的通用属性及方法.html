@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>form</title>
+<script type="text/javascript">
+	//显示属性
+	function test() {
+		var text_name = document.myForm.text_name;
+		alert("text_name.form=" + text_name.form.name 
+				+ "\ntext_name.name=" + text_name.name 
+				+ "\ntext_name.type=" + text_name.type
+				+ "\ntext_name.value=" + text_name.value 
+				+ "\ntext_name.defaultValue=" + text_name.defaultValue);
+	}
+	//获得焦点
+	function do_focus() {
+		document.myForm.text_name.focus();
+	}
+	//失去焦点
+	function do_blur() {
+		document.myForm.text_name.blur();
+	}
+</script>
+</head>
+<body>
+	<form name="myForm">
+		<input type="text"   name="text_name"   value="textValue"><br>
+		<input type="button" name="button_1" value="显示属性" onclick="test()"> <br> 
+		<input type="button" name="button_2" value="获得焦点" onclick="do_focus()"> <br>
+		<input type="button" name="button_3" value="失去焦点" onclick="do_blur()">
+	</form>
+</body>
+</html>

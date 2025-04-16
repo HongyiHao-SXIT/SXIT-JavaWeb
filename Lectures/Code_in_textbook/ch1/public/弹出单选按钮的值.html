@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>弹出单选按钮的值</title>
+<script type="text/javascript">
+	function gg() {
+		var n = document.forms[0].sex.length;
+		for ( var i = 0; i < n; i++) {
+			if (document.forms[0].sex[i].checked) {
+				alert(document.forms[0].sex[i].value);
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<form action="">
+		<input type="radio" name="sex" value="male" onclick="gg()" /> 男 
+		<input type="radio" name="sex" value="female" onclick="gg()" /> 女
+	</form>
+</body>
+</html>
