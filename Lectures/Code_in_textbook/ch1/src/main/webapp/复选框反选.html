@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>复选框反选</title>
+<script type="text/javascript">
+	function unSelect() {
+		var n = document.forms[0].check.length;//得到复选框的个数
+		for ( var i = 0; i < n; i++) {
+			if (document.forms[0].check[i].checked) {
+				document.forms[0].check[i].checked = false;
+			} else {
+				document.forms[0].check[i].checked = true;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<form action="">
+		<input type="checkbox" name="check" value="0" />aaa<br> <input
+			type="checkbox" name="check" value="1" />bbb<br> <input
+			type="checkbox" name="check" value="2" />ccc<br> <input
+			type="checkbox" name="check" value="3" />ddd<br> <input
+			type="checkbox" name="check" value="4" />eee<br> <input
+			type="checkbox" name="check" value="5" />fff<br> <input
+			type="button" value="反选" onclick="unSelect()">
+	</form>
+</body>
+</html>

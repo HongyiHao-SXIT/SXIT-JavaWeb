@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>下拉列表的应用</title>
+<script type="text/javascript">
+	function gg() {
+		var opObject = document.forms[0].elements["cities"];//获得列表对象
+		for ( var i = 0; i < opObject.options.length; i++) {  //使用options属性
+			if (opObject.options[i].selected) {          //找到被选中的选项
+				alert(opObject.options[i].value);      //弹出选中选项的值
+				alert(opObject.options[i].text);       //弹出选中选项的文本
+			}
+		}
+		//为列表新增选项
+		opObject.options[opObject.length] = new Option("新增" + 1, "new" + 1);
+	}
+</script>
+</head>
+<body>
+	<form action="">
+		<select name="cities" onchange="gg()">
+			<option value="daLian">大连</option>
+			<option value="beiJing">北京</option>
+			<option value="shangHai">上海</option>
+			<option value="guanZhou">广州</option>
+		</select>
+	</form>
+</body>
+</html>

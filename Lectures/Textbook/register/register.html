@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="p3.css">
+    <title>practicel_3</title>
+</head>
+
+<body>
+    <div class="register-form">
+        <h2>用户注册</h2>
+        <input type="text" id="loginAccount" placeholder="登陆账号：请输入登陆账号">
+        <input type="password" id="password" placeholder="密码：请输入密码">
+        <input type="password" id="confirmPassword" placeholder="确认密码：请再次输入密码">
+        <input type="text" id="name" placeholder="姓名：请输入姓名">
+        <input type="text" id="idCard" placeholder="身份证号：请输入18位身份证号">
+        <input type="text" id="birthDate" placeholder="出生年/月/日：格式:yyyy-mm-dd">
+        <input type="text" id="address" placeholder="住址：请输入住址">
+        <input type="text" id="postcode" placeholder="邮编：请输入6位邮编">
+        <input type="text" id="email" placeholder="E-mail:请输入邮箱">
+        <button onclick="register()">注册</button>
+    </div>
+    <script>
+        function register() {
+            const loginAccount = document.getElementById('loginAccount').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const name = document.getElementById('name').value;
+            const idCard = document.getElementById('idCard').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const address = document.getElementById('address').value;
+            const postcode = document.getElementById('postcode').value;
+            const email = document.getElementById('email').value;
+
+            if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(loginAccount)) {
+                alert('登陆账号只能是字母或数字且字母开头');
+                document.getElementById('loginAccount').focus();
+                return;
+            }
+
+            if (password.length < 8 ||!/[a-zA-Z]/.test(password) ||!/\d/.test(password) ||!/[^a-zA-Z0-9]/.test(password)) {
+                alert('密码要在8位以上且需要有字母、数字和字母数字外的字符');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            if (password!== confirmPassword) {
+                alert('两次输入的密码不一致');
+                document.getElementById('confirmPassword').focus();
+                return;
+            }
+
+            if (name === '') {
+                alert('请输入姓名');
+                document.getElementById('name').focus();
+                return;
+            }
+
+            if (!/^\d{17}[\dXx]$/.test(idCard)) {
+                alert('请输入18位有效的身份证号');
+                document.getElementById('idCard').focus();
+                return;
+            }
+
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+                alert('出生年/月/日格式应为 yyyy-mm-dd');
+                document.getElementById('birthDate').focus();
+                return;
+            }
+            const birthYear = parseInt(birthDate.split('-')[0]);
+            const idCardYear = parseInt(idCard.slice(6, 10));
+            if (birthYear!== idCardYear) {
+                alert('根据出生年/月/日判断，身份证号不合法');
+                document.getElementById('idCard').focus();
+                return;
+            }
+
+            if (address === '') {
+                alert('请输入住址');
+                document.getElementById('address').focus();
+                return;
+            }
+
+            if (!/^\d{6}$/.test(postcode)) {
+                alert('邮编应为6位数字');
+                document.getElementById('postcode').focus();
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                alert('请输入有效的邮箱地址');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            alert('注册成功！');
+
+            document.getElementById('loginAccount').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('idCard').value = '';
+            document.getElementById('birthDate').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('postcode').value = '';
+            document.getElementById('email').value = '';
+        }
+    </script>
+</body>
+
+</html>

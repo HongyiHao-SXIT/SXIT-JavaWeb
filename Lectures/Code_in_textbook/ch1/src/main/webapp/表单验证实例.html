@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>表单验证实例</title>
+<script type="text/javascript">
+function valid(form){
+	//验证非空
+	if(form.pass.value.length == 0){
+		alert("Please enter a password");
+		form.pass.focus();
+		return false;
+	}
+	//验证长度
+	if(form.pass.value.length < 6){
+		alert("Password must be at least 6 characters");
+		form.pass.focus();
+		return false;
+	}
+	var exp=/^[a-z0-9]+$/;
+	//验证格式
+	if(!exp.test(form.pass.value)){
+		alert("Password contains illegal characters");
+		form.pass.focus();
+		return false;
+	}
+	alert("OK password");
+	return true;
+}
+</script>
+</head>
+<body>
+	<form action="">
+		Enter your password:
+		<input name="pass" type="password"/>
+		<input type="button" value="submit password" onclick="valid(this.form)"/> 
+	</form>
+</body>
+</html>
