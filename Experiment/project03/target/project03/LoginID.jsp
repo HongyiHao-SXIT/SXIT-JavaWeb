@@ -7,9 +7,9 @@
     </head>
     <body>
         <form action="shop.jsp" method="post">
-            欢迎来到超市，请输入您的会员卡号:<br>
+            Welcome to the supermarket. Please enter your membership card number:<br>
             <input type="text" name = "no">
-            <input type="submit" value="提交" name="submit">
+            <input type="submit" value="Submit" name="submit">
         </form>
     </body>
 </html>

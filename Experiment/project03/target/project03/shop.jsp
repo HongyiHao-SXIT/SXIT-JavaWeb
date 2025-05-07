@@ -13,7 +13,7 @@
         session.setAttribute("no", no);
     }
     %>
-    <a href="food.jsp">这里是调料柜台，欢迎选购</a><br>
-    <a href="LoginID.jsp">欢迎修改会员卡号</a>
+    <a href="food.jsp">This is the seasoning counter. Welcome to make your purchase.</a><br>
+    <a href="LoginID.jsp">Welcome to modify the membership card number.</a>
 </body>
 </html>

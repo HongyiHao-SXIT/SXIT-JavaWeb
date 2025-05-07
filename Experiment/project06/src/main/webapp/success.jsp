@@ -1,10 +1,9 @@
-<%@ page contentType = "text/html; charset=UTF - 8" pageEncoding = "UTF - 8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF - 8" language="java" %>
 <html>
 <head>
-    <title>成功页面</title>
+    <title>注册成功</title>
 </head>
 <body>
-    <h1>数据保存成功！</h1>
+${message}
 </body>
 </html>

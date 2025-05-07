@@ -7,15 +7,14 @@
     <title>count.jsp</title>
 </head>
 <body>
-    这里是结账柜台，请确认以下信息
+    This is the checkout counter. Please confirm the following information.
     <p>
         <%
             String no = (String) session.getAttribute("no");
-            out.println("您的会员卡号是： " + no);
+            out.println("Your membership card number is: " + no);
 
-            // 这里虽然在 page 指令里导入了 java.util.*，但为了代码清晰，可明确写出导入语句
             Enumeration<String> enumGoods = session.getAttributeNames();
-            out.println("<br>购物车中的商品清单： <br>");
+            out.println("<br>List of goods in the shopping cart: <br>");
             while (enumGoods.hasMoreElements()) {
                 String key = enumGoods.nextElement();
                 String good = (String) session.getAttribute(key);
@@ -28,4 +27,4 @@
         %>
     </p>
 </body>
-</html>    
+</html>

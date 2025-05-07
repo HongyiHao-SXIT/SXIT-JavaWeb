@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,31 +7,31 @@
 </head>
 <body>
     <form action="" method="post" name="form">
-        这里是调料柜台，请选择你要购买的商品：
+        This is the seasoning counter. Please select the goods you want to purchase:
         <br/>
-        <input type="checkbox" name="food" value="调和油">
-        调和油
-        <input type="checkbox" name="food" value="强化盐">
-        强化盐
-        <input type="checkbox" name="food" value="多维醋">
-        多维醋
-        <input type="checkbox" name="food" value="绿色调料">
-        绿色调料
+        <input type="checkbox" name="food" value="Harmonized Oil">
+        Harmonized Oil
+        <input type="checkbox" name="food" value="Fortified Salt">
+        Fortified Salt
+        <input type="checkbox" name="food" value="Multivitamin Vinegar">
+        Multivitamin Vinegar
+        <input type="checkbox" name="food" value="Green Seasoning">
+        Green Seasoning
         <br/>
-        <input type="submit" name="submit" value="购物">
+        <input type="submit" name="submit" value="Shop">
         <p>
-            <a href="LoginID.jsp">欢迎修改会员卡号</a>
-            <a href="count.jsp">欢迎查看购物车！</a>
+            <a href="LoginID.jsp">Welcome to modify the membership card number</a>
+            <a href="count.jsp">Welcome to check the shopping cart!</a>
         </p>
         <%
             request.setCharacterEncoding("utf-8");
             String goods[] = request.getParameterValues("food");
-            if(goods != null && goods.length !=0){
-                for(int i = 0;i < goods.length; i++){
-                    session.setAttribute(goods[i],goods[i]);
+            if (goods != null && goods.length != 0) {
+                for (int i = 0; i < goods.length; i++) {
+                    session.setAttribute(goods[i], goods[i]);
                 }
             }
         %>
     </form>
 </body>
-</html>    
+</html>
