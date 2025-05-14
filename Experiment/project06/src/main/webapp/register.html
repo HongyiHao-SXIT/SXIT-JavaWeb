@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eaeaea; }
+        .form-container {
+            width: 400px; margin: 50px auto; padding: 20px;
+            background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; }
+        label { display: block; margin-top: 10px; }
+        input, select, textarea {
+            width: 100%; padding: 8px; margin-top: 4px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        input[type=submit], input[type=reset] {
+            width: 48%; margin-top: 20px;
+            background: #4CAF50; color: white; border: none;
+            border-radius: 4px; padding: 10px;
+            cursor: pointer;
+        }
+        input[type=reset] { background: #f44336; float: right; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>用户注册</h2>
+        <form action="register.action" method="post">
+            <label>姓名：</label>
+            <input type="text" name="userName" required>
+
+            <label>博客地址：</label>
+            <input type="text" name="blogUrl">
+
+            <label>性别：</label>
+            <input type="radio" name="sex" value="1"> 男
+            <input type="radio" name="sex" value="2"> 女
+
+            <label>省份：</label>
+            <select name="provinceName">
+                <option>北京</option>
+                <option>上海</option>
+                <option>广东</option>
+            </select>
+
+            <label>兴趣爱好：</label>
+            <input type="text" name="hobby">
+
+            <label>备注：</label>
+            <textarea name="remark" rows="3"></textarea>
+
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </form>
+    </div>
+</body>
+</html>
