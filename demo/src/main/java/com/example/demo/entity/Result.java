@@ -1,0 +1,81 @@
+package com.example.demo.entity;
+
+public class Result {
+
+    private Integer code; // 1:成功，0：失败
+
+    private String msg;//假如失败，失败的原因
+
+    private Object data; //要返回的数据
+
+    //提供两个成功的静态方法
+
+    /**
+     * 新增、修改、删除成功可以使用该方法
+     *
+     * @return
+     */
+    public static Result success() {
+        return new Result(1, "success", null);
+    }
+
+    /**
+     * 查询成功可以使用该方法
+     *
+     * @param data
+     * @return
+     */
+    public static Result success(Object data) {
+        return new Result(1, "success", data);
+    }
+
+    //提供一个失败的静态方法
+    public static Result error(String msg) {
+        return new Result(0,msg,null);
+    }
+
+
+    //提供一个无参构造
+    public Result() {
+    }
+
+    //提供一个全参数构造
+    public Result(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+}
