@@ -1,7 +1,7 @@
 -- Active: 1736786939860@@127.0.0.1@3306@tlias
 use tlias;
 
-CREATE TABLE dept (
+CREATE TABLE IF NOT EXISTS dept (
   id int unsigned PRIMARY KEY AUTO_INCREMENT COMMENT 'ID, 主键',
   name varchar(10) NOT NULL UNIQUE COMMENT '部门名称',
   create_time datetime DEFAULT NULL COMMENT '创建时间',
@@ -16,7 +16,7 @@ INSERT INTO dept VALUES (1,'学工部','2023-09-25 09:47:40','2024-07-25 09:47:4
                       (6,'行政部','2023-11-30 20:56:37','2024-07-30 20:56:37');
 
 -- 员工表
-create table emp(
+create table IF NOT EXISTS emp(
     id int unsigned primary key auto_increment comment 'ID,主键',
     username varchar(20) not null unique comment '用户名',
     password varchar(50) default '123456' comment '密码',
@@ -67,7 +67,7 @@ INSERT INTO emp VALUES
     
 
 -- 员工工作经历信息
-create table emp_expr(
+create table IF NOT EXISTS emp_expr(
     id int unsigned primary key auto_increment comment 'ID, 主键',
     emp_id int unsigned comment '员工ID',
     begin date comment '开始时间',
@@ -75,3 +75,5 @@ create table emp_expr(
     company varchar(50) comment '公司名称',
     job varchar(50) comment '职位'
 )comment '工作经历';
+
+select e.*, d.name as deptName from emp e left join dept d on e.dept_id = d.id
