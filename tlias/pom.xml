@@ -61,11 +61,24 @@
 			<version>3.0.4</version>
 			<scope>test</scope>
 		</dependency>
-		<!--分页插件PageHelper-->
 	<dependency>
     	<groupId>com.github.pagehelper</groupId>
     	<artifactId>pagehelper-spring-boot-starter</artifactId>
     	<version>1.4.7</version>
+	</dependency>
+
+	<!-- Apache Commons Collections -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-collections4</artifactId>
+		<version>4.4</version>
+	</dependency>
+
+	<!-- 或者 Spring Utils -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>5.3.18</version>
 	</dependency>
 	</dependencies>
 

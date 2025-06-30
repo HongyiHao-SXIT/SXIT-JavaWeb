@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageResult {
-    private Long total;
-    private List<?> rows;
+        private Long total;
+        private List rows;
 }
