@@ -9,13 +9,10 @@ import java.util.List;
 
 public interface EmpService {
 
-    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end);
-    public void save(Emp emp);
-    public Emp getById(Integer id);
-    public void update(Emp emp);
-    public void delete(Integer id);
-    public PageResult page(EmpQueryParam empQueryParam);
-    public void deleteByIds(List<Integer> ids);
-
-    
+    PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end);
+    void save(Emp emp);
+    void deleteByIds(List<Integer> ids);
+    Emp getInfo(Integer id);
+    void update(Emp emp);
+    PageResult page(EmpQueryParam empQueryParam);
 }

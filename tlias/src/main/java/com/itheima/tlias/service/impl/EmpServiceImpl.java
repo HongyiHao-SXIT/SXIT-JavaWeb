@@ -1,5 +1,7 @@
 package com.itheima.tlias.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itheima.tlias.bean.Emp;
 import com.itheima.tlias.bean.EmpExpr;
 import com.itheima.tlias.bean.EmpQueryParam;
@@ -10,8 +12,11 @@ import com.itheima.tlias.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -22,56 +27,45 @@ public class EmpServiceImpl implements EmpService {
     private EmpExprMapper empExprMapper;
 
     @Override
-    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, 
-                         LocalDate begin, LocalDate end) {
-        Integer start = (page - 1) * pageSize;
-        Long total = empMapper.count(name, gender, begin, end);
-        List<Emp> rows = empMapper.list(start, pageSize, name, gender, begin, end);
-        return new PageResult(total, rows);
-    }
-
-    @Override
-    public PageResult page(EmpQueryParam param) {
-        Integer start = (param.getPage() - 1) * param.getPageSize();
-        Long total = empMapper.count(param.getName(), param.getGender(), param.getBegin(), param.getEnd());
-        List<Emp> rows = empMapper.list(start, param.getPageSize(), param.getName(), 
-                                    param.getGender(), param.getBegin(), param.getEnd());
-        return new PageResult(total, rows);
-    }
-
-    @Override
-    public Emp getById(Integer id) {
-        return empMapper.getById(id);
-    }
-
-    @Override
-    public void save(Emp emp) {
+    public void save(Emp emp){
         emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
+
         empMapper.insert(emp);
+        
+    Integer empId = emp.getId();
+    List<EmpExpr> exprList = emp.getExprList();
+    if(!CollectionUtils.isEmpty(exprList)){
+        exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+        empExprMapper.insertBatch(exprList);
+    }
+    }
+
+    @Override
+    public Emp getInfo(Integer id) {
+    return empMapper.getById(id);
+    }
+
+    @Transactional
+    @Override
+    public void update(Emp emp){
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
 
         Integer empId = emp.getId();
         List<EmpExpr> exprList = emp.getExprList();
-        if(exprList != null && !exprList.isEmpty()){
+        if(!CollectionUtils.isEmpty(exprList)){
             exprList.forEach(empExpr -> empExpr.setEmpId(empId));
             empExprMapper.insertBatch(exprList);
         }
     }
 
-    @Override
-    public void update(Emp emp) {
-        empMapper.updateById(emp);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        empMapper.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public void deleteByIds(List<Integer> ids) {
-        empMapper.deleteByIds(ids);
-        empExprMapper.deleteByEmpIds(ids);
+        public PageResult page(EmpQueryParam empQueryParam) {
+        PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
+        List<Emp> empList = empMapper.list(empQueryParam);
+        Page<Emp> p = (Page<Emp>)empList;
+        return new PageResult(p.getTotal(), p.getResult());
     }
 }

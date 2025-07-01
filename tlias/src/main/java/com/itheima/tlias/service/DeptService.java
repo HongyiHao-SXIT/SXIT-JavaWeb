@@ -7,8 +7,8 @@ import com.itheima.tlias.bean.Dept;
 public interface DeptService {
 
     public List<Dept> findAll();
-    public void deleteById(Integer id);
-    public void save(Dept dept);
-    public Dept getById(Integer id);
-    public void updateById(Dept dept);
+    void deleteById(Integer id);
+    void save(Dept dept);
+    Dept getById(Integer id);
+    void update(Dept dept);
 }

@@ -20,7 +20,6 @@ public class UploadController {
             String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
             String uniqueFileName = UUID.randomUUID().toString().replace("-", "") + extName;
             File targetFile = new File(UPLOAD_DIR + uniqueFileName);
-
             if (!targetFile.getParentFile().exists()) {
                 targetFile.getParentFile().mkdirs();
             }

@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -27,24 +29,12 @@ public class EmpController {
     @GetMapping
     public Result page(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer pageSize,
-                       @RequestParam(required = false) String name,
-                       @RequestParam(required = false) Integer gender,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(required = false) LocalDate begin,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(required = false) LocalDate end) {
-        try {
-            PageResult pageResult = empService.page(page, pageSize, name, gender, begin, end);
-            return Result.success(pageResult);
-        } catch (Exception e) {
-            return Result.error("分页查询员工信息失败：" + e.getMessage());
-        }
+                       String name, Integer gender,
+                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
+                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+        PageResult pageResult = empService.page(page, pageSize);
+        return Result.success(pageResult);
     }
-
-    @DeleteMapping("/{id}")
-    public Result delete(@PathVariable Integer id) {
-        empService.delete(id);
-        return Result.success();
-    }
-
 
     @PostMapping
     public Result save(@RequestBody Emp emp){
@@ -57,5 +47,23 @@ public class EmpController {
     empService.deleteByIds(ids);
     return Result.success();
     }
+
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable Integer id){
+    Emp emp  = empService.getInfo(id);
+    return Result.success(emp);
+    }
+
+    @PutMapping
+    public Result update(@RequestBody Emp emp){
+        empService.update(emp);
+        return Result.success();
+    }
+
+    @GetMapping
+    public Result page(EmpQueryParam empQueryParam) {
+    PageResult pageResult = empService.page(empQueryParam);
+    return Result.success(pageResult);
+}
 
 }

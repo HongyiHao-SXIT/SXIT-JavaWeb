@@ -13,12 +13,12 @@ public class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptMapper deptMapper;
 
-    public List<Dept> findAll() {
+        public List<Dept> findAll() {
         return deptMapper.findAll();
     }
 
     public void deleteById(Integer id) {
-        deptMapper.deleteById(id);
+    deptMapper.deleteById(id);
     }
 
     public void save(Dept dept) {
@@ -27,13 +27,12 @@ public class DeptServiceImpl implements DeptService {
         deptMapper.insert(dept);
     }
 
-    @Override
     public Dept getById(Integer id) {
-        return deptMapper.getById(id);
+    return deptMapper.getById(id);
     }
 
-    public void updateById(Dept dept){
-        dept.setUpdateTime(LocalDateTime.now());
-        deptMapper.updateById(dept);
+    public void update(Dept dept) {
+    dept.setUpdateTime(LocalDateTime.now());
+    deptMapper.update(dept);
     }
 }
