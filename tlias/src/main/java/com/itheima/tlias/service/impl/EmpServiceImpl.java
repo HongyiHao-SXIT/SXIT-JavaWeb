@@ -24,6 +24,7 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
     private EmpExprMapper empExprMapper;
 
     @Override
@@ -33,17 +34,17 @@ public class EmpServiceImpl implements EmpService {
 
         empMapper.insert(emp);
         
-    Integer empId = emp.getId();
-    List<EmpExpr> exprList = emp.getExprList();
-    if(!CollectionUtils.isEmpty(exprList)){
-        exprList.forEach(empExpr -> empExpr.setEmpId(empId));
-        empExprMapper.insertBatch(exprList);
-    }
+        Integer empId = emp.getId();
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
+            exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+            empExprMapper.insertBatch(exprList);
+        }
     }
 
     @Override
     public Emp getInfo(Integer id) {
-    return empMapper.getById(id);
+        return empMapper.getById(id);
     }
 
     @Transactional
@@ -62,10 +63,31 @@ public class EmpServiceImpl implements EmpService {
         }
     }
 
-        public PageResult page(EmpQueryParam empQueryParam) {
+    @Override
+    public PageResult page(EmpQueryParam empQueryParam) {
         PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
         List<Emp> empList = empMapper.list(empQueryParam);
         Page<Emp> p = (Page<Emp>)empList;
         return new PageResult(p.getTotal(), p.getResult());
+    }
+
+    public PageResult pageByParams(String name, Integer gender, LocalDate begin, LocalDate end, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<Emp> empList = empMapper.listByParams(name, gender, begin, end);
+        Page<Emp> p = (Page<Emp>)empList;
+        return new PageResult(p.getTotal(), p.getResult());
+    }
+
+    @Override
+    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin,
+            LocalDate end) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'page'");
+    }
+
+    @Override
+    public void deleteByIds(List<Integer> ids) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteByIds'");
     }
 }

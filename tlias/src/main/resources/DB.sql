@@ -1,4 +1,4 @@
--- Active: 1736786939860@@127.0.0.1@3306@tlias
+CREATE DATABASE IF NOT EXISTS tlias;
 use tlias;
 
 CREATE TABLE IF NOT EXISTS dept (

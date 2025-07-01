@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 @RestController
 @RequestMapping("/emps")
 public class EmpController {
@@ -27,12 +25,8 @@ public class EmpController {
     private EmpService empService;
 
     @GetMapping
-    public Result page(@RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer pageSize,
-                       String name, Integer gender,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
-        PageResult pageResult = empService.page(page, pageSize);
+    public Result page(EmpQueryParam empQueryParam) {
+        PageResult pageResult = empService.page(empQueryParam);
         return Result.success(pageResult);
     }
 
@@ -44,14 +38,14 @@ public class EmpController {
 
     @DeleteMapping
     public Result delete(@RequestParam List<Integer> ids){
-    empService.deleteByIds(ids);
-    return Result.success();
+        empService.deleteByIds(ids);
+        return Result.success();
     }
 
     @GetMapping("/{id}")
     public Result getInfo(@PathVariable Integer id){
-    Emp emp  = empService.getInfo(id);
-    return Result.success(emp);
+        Emp emp  = empService.getInfo(id);
+        return Result.success(emp);
     }
 
     @PutMapping
@@ -59,11 +53,4 @@ public class EmpController {
         empService.update(emp);
         return Result.success();
     }
-
-    @GetMapping
-    public Result page(EmpQueryParam empQueryParam) {
-    PageResult pageResult = empService.page(empQueryParam);
-    return Result.success(pageResult);
-}
-
 }

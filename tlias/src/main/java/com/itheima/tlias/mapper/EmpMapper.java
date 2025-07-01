@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
 
-
     @Select("<script>" +
         "SELECT e.*, d.name deptName " +
         "FROM emp e " +
@@ -21,11 +20,11 @@ public interface EmpMapper {
          "<if test='gender != null'>" +
         "AND e.gender = #{gender} " +
         "</if>" +
-        "<if test='beginDate != null'>" +
-        "AND e.entry_date &gt;= #{beginDate} " +
+        "<if test='begin != null'>" +
+        "AND e.entry_date &gt;= #{begin} " +
          "</if>" +
-        "<if test='endDate != null'>" +
-         "AND e.entry_date &lt;= #{endDate} " +
+        "<if test='end != null'>" +
+         "AND e.entry_date &lt;= #{end} " +
         "</if>" +
          "</script>")
     List<Emp> list(EmpQueryParam empQueryParam);
@@ -34,29 +33,6 @@ public interface EmpMapper {
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
         "values (#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void insert(Emp emp);
-
-       @Select("<script>" +
-            "SELECT e.*, d.name deptName " +
-            "FROM emp e " +
-            "LEFT JOIN dept d ON e.dept_id = d.id " +
-            "WHERE 1=1 " +
-            "<if test='name != null and name != \"\"'>" +
-            "AND e.name LIKE CONCAT('%', #{name}, '%') " +
-            "</if>" +
-            "<if test='gender != null'>" +
-            "AND e.gender = #{gender} " +
-            "</if>" +
-            "<if test='begin != null'>" +
-            "AND e.entry_date &gt;= #{begin} " +
-            "</if>" +
-            "<if test='end != null'>" +
-            "AND e.entry_date &lt;= #{end} " +
-            "</if>" +
-            "</script>")
-    List<Emp> list(@Param("name") String name, 
-                   @Param("gender") Integer gender,
-                   @Param("begin") LocalDate begin,
-                   @Param("end") LocalDate end);
 
     @Delete("<script>" +
             "DELETE FROM emp WHERE id IN " +
@@ -74,6 +50,27 @@ public interface EmpMapper {
             "dept_id = #{deptId}, create_time = #{createTime}, update_time = #{updateTime} WHERE id = #{id}")
     void updateById(Emp emp);
 
-
+    // 修改方法名
+    @Select("<script>" +
+        "SELECT e.*, d.name deptName " +
+        "FROM emp e " +
+        "LEFT JOIN dept d ON e.dept_id = d.id " +
+        "WHERE 1=1 " +
+        "<if test='name != null and name != \"\"'>" +
+        "AND e.name LIKE CONCAT('%', #{name}, '%') " +
+        "</if>" +
+        "<if test='gender != null'>" +
+        "AND e.gender = #{gender} " +
+        "</if>" +
+        "<if test='begin != null'>" +
+        "AND e.entry_date &gt;= #{begin} " +
+        "</if>" +
+        "<if test='end != null'>" +
+        "AND e.entry_date &lt;= #{end} " +
+        "</if>" +
+        "</script>")
+    List<Emp> listByParams(@Param("name") String name, 
+                           @Param("gender") Integer gender,
+                           @Param("begin") LocalDate begin,
+                           @Param("end") LocalDate end);
 }
-
