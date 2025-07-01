@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import com.itheima.tlias.bean.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -51,10 +52,10 @@ public class EmpController {
         return Result.success();
     }
 
-    @GetMapping
-    public Result page(EmpQueryParam empQueryParam) {
-    PageResult pageResult = empService.page(empQueryParam);
-    return Result.success(pageResult);
-}
-    
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids){
+    empService.deleteByIds(ids);
+    return Result.success();
+    }
+
 }

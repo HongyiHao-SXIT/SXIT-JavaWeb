@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 @Mapper
-public interface Deptmapper {
+public interface DeptMapper {
     @Select("select * from dept")
     List<Dept> findAll();
 

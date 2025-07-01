@@ -5,6 +5,7 @@ import com.itheima.tlias.bean.EmpQueryParam;
 import com.itheima.tlias.bean.PageResult;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface EmpService {
 
@@ -14,4 +15,7 @@ public interface EmpService {
     public void update(Emp emp);
     public void delete(Integer id);
     public PageResult page(EmpQueryParam empQueryParam);
+    public void deleteByIds(List<Integer> ids);
+
+    
 }

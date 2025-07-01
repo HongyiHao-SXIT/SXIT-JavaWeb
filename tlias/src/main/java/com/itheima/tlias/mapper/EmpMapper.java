@@ -1,10 +1,9 @@
 package com.itheima.tlias.mapper;
 
 import com.itheima.tlias.bean.Emp;
+import com.itheima.tlias.bean.EmpExpr;
 import com.itheima.tlias.bean.EmpQueryParam;
-
 import org.apache.ibatis.annotations.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -62,6 +61,9 @@ public interface EmpMapper {
             "job = #{job}, salary = #{salary}, image = #{image}, entry_date = #{entryDate}, dept_id = #{deptId}, update_time = #{updateTime} " +
             "where id = #{id}")
     void updateById(Emp emp);
-    
+
     List<Emp> list(EmpQueryParam empQueryParam);
+
+    void deleteByIds(List<Integer> ids);
 }
+
