@@ -79,15 +79,18 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
-    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin,
-            LocalDate end) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'page'");
+    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end) {
+        PageHelper.startPage(page, pageSize);
+        List<Emp> empList = empMapper.listByParams(name, gender, begin, end);
+        Page<Emp> p = (Page<Emp>) empList;
+        return new PageResult(p.getTotal(), p.getResult());
     }
 
     @Override
+    @Transactional
     public void deleteByIds(List<Integer> ids) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteByIds'");
+        empExprMapper.deleteByEmpIds(ids);
+        empMapper.deleteByIds(ids);
     }
+
 }

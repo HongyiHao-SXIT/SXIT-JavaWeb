@@ -24,7 +24,9 @@ public class UploadController {
                 targetFile.getParentFile().mkdirs();
             }
             file.transferTo(targetFile);
+            String imageUrl = "/images/" + uniqueFileName;
+            return Result.success(imageUrl);
         }
-        return Result.success();
+        return Result.error("文件为空，上传失败！");
     }
 }

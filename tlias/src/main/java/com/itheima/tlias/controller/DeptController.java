@@ -15,40 +15,37 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;  
 
 @RestController
-@RequestMapping("/dept")
+@RequestMapping("/depts")
 public class DeptController {
     @Autowired
     private DeptService deptService;
 
     @GetMapping
-    public Result list(){
+    public Result list() {
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
     }
 
-    @DeleteMapping
-    public Result delete(Integer id){
-        System.out.println("根据ID删除部门: " + id);
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Integer id) {
+        deptService.deleteById(id);
         return Result.success();
     }
 
     @PostMapping
-    public Result save(@RequestBody Dept dept){
-        System.out.println("新增部门, dept=" + dept);
+    public Result save(@RequestBody Dept dept) {
         deptService.save(dept);
         return Result.success();
     }
 
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id){
-        System.out.println("根据ID查询, id=" + id);
+    public Result getById(@PathVariable Integer id) {
         Dept dept = deptService.getById(id);
         return Result.success(dept);
     }
 
     @PutMapping
-    public Result update(@RequestBody Dept dept){
-        System.out.println("修改部门, dept=" + dept);
+    public Result update(@RequestBody Dept dept) {
         deptService.update(dept);
         return Result.success();
     }
