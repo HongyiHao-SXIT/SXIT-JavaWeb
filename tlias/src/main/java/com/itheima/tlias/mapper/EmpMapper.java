@@ -14,43 +14,64 @@ public interface EmpMapper {
         "FROM emp e " +
         "LEFT JOIN dept d ON e.dept_id = d.id " +
         "WHERE 1=1 " +
-        "<if test='name != null and name != \"\"'>" +
-        "AND e.name LIKE CONCAT('%', #{name}, '%') " +
+        "<if test='param.name != null and param.name != \"\"'>" +
+        "AND e.name LIKE CONCAT('%', #{param.name}, '%') " +
         "</if>" +
-         "<if test='gender != null'>" +
-        "AND e.gender = #{gender} " +
+        "<if test='param.gender != null'>" +
+        "AND e.gender = #{param.gender} " +
         "</if>" +
-        "<if test='begin != null'>" +
-        "AND e.entry_date &gt;= #{begin} " +
-         "</if>" +
-        "<if test='end != null'>" +
-         "AND e.entry_date &lt;= #{end} " +
+        "<if test='param.begin != null'>" +
+        "AND e.entry_date &gt;= #{param.begin} " +
         "</if>" +
-         "</script>")
-    List<Emp> list(EmpQueryParam empQueryParam);
+        "<if test='param.end != null'>" +
+        "AND e.entry_date &lt;= #{param.end} " +
+        "</if>" +
+        "</script>")
+    List<Emp> list(@Param("param") EmpQueryParam empQueryParam);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
-        "values (#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
+    @Insert("INSERT INTO emp(username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
+        "VALUES (#{username}, #{password}, #{name}, #{gender}, #{phone}, #{job}, #{salary}, #{image}, #{entryDate}, #{deptId}, #{createTime}, #{updateTime})")
     void insert(Emp emp);
+
+    @Delete("DELETE FROM emp WHERE id = #{id}")
+    void deleteById(Integer id);
 
     @Delete("<script>" +
             "DELETE FROM emp WHERE id IN " +
-            "<foreach collection='list' item='id' open='(' separator=',' close=')'>" +
+            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>" +
             "#{id}" +
             "</foreach>" +
             "</script>")
-    void deleteByIds(List<Integer> ids);
+    void deleteByIds(@Param("ids") List<Integer> ids);
     
-    @Select("SELECT e.*, d.name as deptName FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.id = #{id}")
+    @Select("SELECT e.*, d.name AS deptName FROM emp e LEFT JOIN dept d ON e.dept_id = d.id WHERE e.id = #{id}")
     Emp getById(Integer id);
 
-    @Update("UPDATE emp SET username = #{username}, password = #{password}, name = #{name}, gender = #{gender}, " +
-            "phone = #{phone}, job = #{job}, salary = #{salary}, image = #{image}, entry_date = #{entryDate}, " +
-            "dept_id = #{deptId}, create_time = #{createTime}, update_time = #{updateTime} WHERE id = #{id}")
-    void updateById(Emp emp);
+    @Update("UPDATE emp SET " +
+            "username = #{username}, " +
+            "<if test='password != null'>password = #{password},</if>" +
+            "name = #{name}, " +
+            "gender = #{gender}, " +
+            "phone = #{phone}, " +
+            "job = #{job}, " +
+            "salary = #{salary}, " +
+            "image = #{image}, " +
+            "entry_date = #{entryDate}, " +
+            "dept_id = #{deptId}, " +
+            "update_time = #{updateTime} " +
+            "WHERE id = #{id}")
+    void update(Emp emp);
 
-    // 修改方法名
+    @Select("SELECT COUNT(*) FROM emp WHERE dept_id = #{deptId}")
+    long countByDeptId(Integer deptId);
+
+    @Select("SELECT COUNT(*) FROM emp WHERE username = #{username}")
+    long countByUsername(String username);
+
+    @Select("SELECT * FROM emp WHERE username = #{username} AND password = #{password}")
+    Emp getByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
     @Select("<script>" +
         "SELECT e.*, d.name deptName " +
         "FROM emp e " +
@@ -70,7 +91,10 @@ public interface EmpMapper {
         "</if>" +
         "</script>")
     List<Emp> listByParams(@Param("name") String name, 
-                           @Param("gender") Integer gender,
-                           @Param("begin") LocalDate begin,
-                           @Param("end") LocalDate end);
+                          @Param("gender") Integer gender,
+                          @Param("begin") LocalDate begin,
+                          @Param("end") LocalDate end);
+
+    @Select("select * from emp where username = #{username} and password = #{password}")
+    Emp getUsernameAndPassword(Emp emp);
 }

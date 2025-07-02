@@ -26,9 +26,9 @@ public class DeptController {
         return Result.success(deptList);
     }
 
-    @DeleteMapping("/{id}")
-    public Result delete(@PathVariable Integer id) {
-        deptService.deleteById(id);
+    @DeleteMapping
+    public Result deleteDepts(@RequestBody List<Integer> ids) {
+        deptService.deleteByIds(ids);
         return Result.success();
     }
 

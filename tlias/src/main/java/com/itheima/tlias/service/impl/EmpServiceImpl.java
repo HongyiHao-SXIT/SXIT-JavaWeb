@@ -6,6 +6,7 @@ import com.itheima.tlias.bean.Emp;
 import com.itheima.tlias.bean.EmpExpr;
 import com.itheima.tlias.bean.EmpQueryParam;
 import com.itheima.tlias.bean.PageResult;
+import com.itheima.tlias.controller.LoginInfo;
 import com.itheima.tlias.mapper.EmpExprMapper;
 import com.itheima.tlias.mapper.EmpMapper;
 import com.itheima.tlias.service.EmpService;
@@ -51,7 +52,7 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public void update(Emp emp){
         emp.setUpdateTime(LocalDateTime.now());
-        empMapper.updateById(emp);
+        empMapper.update(emp);
 
         empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
 
@@ -93,4 +94,13 @@ public class EmpServiceImpl implements EmpService {
         empMapper.deleteByIds(ids);
     }
 
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp empLogin = empMapper.getUsernameAndPassword(emp);
+        if(empLogin != null){
+            LoginInfo loginInfo = new LoginInfo(empLogin.getId(), empLogin.getUsername(), empLogin.getName(), null);
+            return loginInfo;
+        }
+        return null;
+    }
 }
