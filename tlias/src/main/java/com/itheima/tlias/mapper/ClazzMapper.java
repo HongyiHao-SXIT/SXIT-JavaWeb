@@ -9,28 +9,12 @@ import java.util.List;
 @Mapper
 public interface ClazzMapper {
 
-    @Select({
-        "<script>",
-        "SELECT * FROM clazz",
-        "<where>",
-        "  <if test='name != null and name != \"\"'>",
-        "    AND name LIKE CONCAT('%', #{name}, '%')",
-        "  </if>",
-        "</where>",
-        "ORDER BY id DESC",
-        "</script>"
-    })
-    List<Clazz> list(@Param("name") ClazzQueryParam queryParam);
+        @Select("SELECT * FROM clazz ORDER BY id DESC")
+        List<Clazz> list();
 
-    @Select("<script>" +
-            "select count(*) from clazz " +
-            "<where>" +
-            "   <if test='name != null and name.trim() != \"\"'> and name like concat('%',#{name},'%') </if>" +
-            "   <if test='begin != null'> and begin_date &gt;= #{begin} </if>" +
-            "   <if test='end != null'> and end_date &lt;= #{end} </if>" +
-            "</where>" +
-            "</script>")
-    Long count(String name, String begin, String end);
+        @Select("SELECT COUNT(*) FROM clazz")
+        Long count();
+
 
     @Delete("delete from clazz where id = #{id}")
     void deleteById(Integer id);

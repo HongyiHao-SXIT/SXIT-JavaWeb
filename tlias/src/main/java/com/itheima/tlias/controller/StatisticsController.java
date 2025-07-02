@@ -10,18 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/statistics")
+@RequestMapping("/report")
 public class StatisticsController {
 
     @Autowired
     private StatisticsService statisticsService;
-
-    @GetMapping("/clazz-count")
+    @GetMapping("/studentCountData")
     public List<Map<String, Object>> getClazzStudentCount() {
         return statisticsService.clazzStudentCount();
     }
-
-    @GetMapping("/degree-stats")
+    
+    @GetMapping("/studentDegreeData")
     public List<Map<String, Object>> getStudentDegreeStatistics() {
         return statisticsService.studentDegreeStatistics();
     }

@@ -24,7 +24,7 @@ public class ClazzServiceImpl implements ClazzService{
     @Override
     public PageResult page(ClazzQueryParam queryParam) {
         PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize());
-        List<Clazz> clazzList = clazzMapper.list(queryParam);
+        List<Clazz> clazzList = clazzMapper.list();
         PageInfo<Clazz> pageInfo = new PageInfo<>(clazzList);
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
@@ -42,7 +42,7 @@ public class ClazzServiceImpl implements ClazzService{
         clazzMapper.insert(clazz);
     }
 
-       @Override
+    @Override
     public void update(Clazz clazz) {
         clazz.setUpdateTime(LocalDateTime.now());
         clazzMapper.update(clazz);

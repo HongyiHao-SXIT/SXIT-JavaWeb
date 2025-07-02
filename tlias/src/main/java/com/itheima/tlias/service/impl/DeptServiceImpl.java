@@ -48,9 +48,13 @@ public class DeptServiceImpl implements DeptService {
     @Override
     @Transactional
     public void deleteById(Integer id) {
-        if (empMapper.countByDeptId(id) > 0) {
+        long empCount = empMapper.countByDeptId(id);
+        System.out.println("部门ID：" + id + " 下员工数量：" + empCount);
+        if (empCount > 0) {
             throw new RuntimeException("删除失败！该部门下有员工，无法直接删除");
         }
         deptMapper.deleteById(id);
+        System.out.println("部门删除成功，ID：" + id);
     }
+
 }
