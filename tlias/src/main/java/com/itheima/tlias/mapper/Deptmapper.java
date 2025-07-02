@@ -25,14 +25,6 @@ public interface DeptMapper {
     @Delete("DELETE FROM dept WHERE id = #{id}")
     void deleteById(Integer id);
 
-    @Delete("<script>" +
-            "DELETE FROM dept WHERE id IN " +
-            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>" +
-            "#{id}" +
-            "</foreach>" +
-            "</script>")
-    void deleteByIds(List<Integer> ids);
-
     @Select("SELECT COUNT(*) FROM emp WHERE dept_id = #{deptId}")
     long countByDeptId(Integer deptId);
 }

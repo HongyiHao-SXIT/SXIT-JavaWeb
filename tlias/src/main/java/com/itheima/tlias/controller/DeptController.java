@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;  
 
@@ -25,12 +26,12 @@ public class DeptController {
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
     }
-
-    @DeleteMapping
-    public Result deleteDepts(@RequestBody List<Integer> ids) {
-        deptService.deleteByIds(ids);
+    @DeleteMapping("/{id}")
+    public Result deleteDept(@PathVariable Integer id) {
+        deptService.deleteById(id);
         return Result.success();
     }
+
 
     @PostMapping
     public Result save(@RequestBody Dept dept) {

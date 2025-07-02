@@ -21,13 +21,13 @@ public interface EmpMapper {
         "AND e.gender = #{param.gender} " +
         "</if>" +
         "<if test='param.begin != null'>" +
-        "AND e.entry_date &gt;= #{param.begin} " +
+        "AND e.entry_date &gt;= #{begin} " +
         "</if>" +
         "<if test='param.end != null'>" +
-        "AND e.entry_date &lt;= #{param.end} " +
+        "AND e.entry_date &lt;= #{end} " +
         "</if>" +
         "</script>")
-    List<Emp> list(@Param("param") EmpQueryParam empQueryParam);
+    List<Emp> list( EmpQueryParam empQueryParam);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("INSERT INTO emp(username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +

@@ -8,7 +8,6 @@ public interface DeptService {
 
     public List<Dept> findAll();
     public void deleteById(Integer id);
-    public void deleteByIds(List<Integer> ids);
     public void save(Dept dept);
     public Dept getById(Integer id);
     public void update(Dept dept);

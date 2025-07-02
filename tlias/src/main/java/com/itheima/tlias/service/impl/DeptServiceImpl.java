@@ -51,18 +51,6 @@ public class DeptServiceImpl implements DeptService {
         if (empMapper.countByDeptId(id) > 0) {
             throw new RuntimeException("删除失败！该部门下有员工，无法直接删除");
         }
-        // 执行删除
         deptMapper.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public void deleteByIds(List<Integer> ids) {
-        for (Integer id : ids) {
-            if (empMapper.countByDeptId(id) > 0) {
-                throw new RuntimeException("删除失败!ID为 " + id + " 的部门下有员工");
-            }
-        }
-        deptMapper.deleteByIds(ids);
     }
 }
