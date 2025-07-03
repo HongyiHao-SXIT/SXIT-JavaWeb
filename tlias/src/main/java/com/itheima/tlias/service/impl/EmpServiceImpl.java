@@ -4,9 +4,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.tlias.bean.Emp;
 import com.itheima.tlias.bean.EmpExpr;
-import com.itheima.tlias.bean.EmpQueryParam;
+import com.itheima.tlias.bean.LoginInfo;
 import com.itheima.tlias.bean.PageResult;
-import com.itheima.tlias.controller.LoginInfo;
 import com.itheima.tlias.mapper.EmpExprMapper;
 import com.itheima.tlias.mapper.EmpMapper;
 import com.itheima.tlias.service.EmpService;
@@ -63,27 +62,11 @@ public class EmpServiceImpl implements EmpService {
             empExprMapper.insertBatch(exprList);
         }
     }
-
-    @Override
-    public PageResult page(EmpQueryParam empQueryParam) {
-        PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
-        List<Emp> empList = empMapper.list(empQueryParam);
-        Page<Emp> p = (Page<Emp>)empList;
-        return new PageResult(p.getTotal(), p.getResult());
-    }
-
+    
     public PageResult pageByParams(String name, Integer gender, LocalDate begin, LocalDate end, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<Emp> empList = empMapper.listByParams(name, gender, begin, end);
         Page<Emp> p = (Page<Emp>)empList;
-        return new PageResult(p.getTotal(), p.getResult());
-    }
-
-    @Override
-    public PageResult page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end) {
-        PageHelper.startPage(page, pageSize);
-        List<Emp> empList = empMapper.listByParams(name, gender, begin, end);
-        Page<Emp> p = (Page<Emp>) empList;
         return new PageResult(p.getTotal(), p.getResult());
     }
 
@@ -103,4 +86,10 @@ public class EmpServiceImpl implements EmpService {
         }
         return null;
     }
+
+    @Override
+    public List<Emp> list() {
+    return empMapper.list();
+    }
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itheima.tlias.bean.Emp;
+import com.itheima.tlias.bean.LoginInfo;
 import com.itheima.tlias.bean.Result;
 import com.itheima.tlias.service.EmpService;
 

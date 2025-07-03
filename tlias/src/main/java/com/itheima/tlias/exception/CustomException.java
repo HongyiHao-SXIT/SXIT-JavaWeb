@@ -1,4 +1,4 @@
-package com.itheima.tlias   .exception;
+package com.itheima.tlias.exception;
 
 public class CustomException extends RuntimeException {
     public CustomException(String msg) {

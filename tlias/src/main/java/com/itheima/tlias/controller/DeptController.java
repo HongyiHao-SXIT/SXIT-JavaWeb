@@ -27,10 +27,9 @@ public class DeptController {
     }
     @DeleteMapping("/{id}")
     public Result deleteDept(@PathVariable Integer id) {
-        deptService.deleteById(id);
+        deptService.delete(id);
         return Result.success();
     }
-
 
     @PostMapping
     public Result save(@RequestBody Dept dept) {

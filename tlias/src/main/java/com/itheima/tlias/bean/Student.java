@@ -27,6 +27,5 @@ public class Student {
     private Short violationScore;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
     private String clazzName;
 }

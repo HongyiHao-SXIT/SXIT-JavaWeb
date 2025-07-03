@@ -6,6 +6,7 @@ import com.itheima.tlias.bean.PageResult;
 import java.util.List;
 
 public interface ClazzService {
+    
     PageResult page(ClazzQueryParam queryParam);
     void deleteById(Integer id);
     void AddClass(Clazz clazz);

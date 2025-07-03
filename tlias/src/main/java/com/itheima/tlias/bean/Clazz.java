@@ -20,7 +20,6 @@ public class Clazz {
     private Integer subject;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
     private String masterName;
     private String status;
 }

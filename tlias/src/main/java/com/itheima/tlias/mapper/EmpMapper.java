@@ -1,33 +1,16 @@
 package com.itheima.tlias.mapper;
 
 import com.itheima.tlias.bean.Emp;
-import com.itheima.tlias.bean.EmpQueryParam;
 import org.apache.ibatis.annotations.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
 
-    @Select("<script>" +
-        "SELECT e.*, d.name deptName " +
-        "FROM emp e " +
-        "LEFT JOIN dept d ON e.dept_id = d.id " +
-        "WHERE 1=1 " +
-        "<if test='param.name != null and param.name != \"\"'>" +
-        "AND e.name LIKE CONCAT('%', #{param.name}, '%') " +
-        "</if>" +
-        "<if test='param.gender != null'>" +
-        "AND e.gender = #{param.gender} " +
-        "</if>" +
-        "<if test='param.begin != null'>" +
-        "AND e.entry_date &gt;= #{begin} " +
-        "</if>" +
-        "<if test='param.end != null'>" +
-        "AND e.entry_date &lt;= #{end} " +
-        "</if>" +
-        "</script>")
-    List<Emp> list( EmpQueryParam empQueryParam);
+    @Select("SELECT * FROM emp ORDER BY id DESC")
+    List<Emp> list();
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("INSERT INTO emp(username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
@@ -97,4 +80,20 @@ public interface EmpMapper {
 
     @Select("select * from emp where username = #{username} and password = #{password}")
     Emp getUsernameAndPassword(Emp emp);
+
+        @Select("SELECT " +
+            "(CASE job WHEN 1 THEN '班主任' " +
+            "         WHEN 2 THEN '讲师' " +
+            "         WHEN 3 THEN '学工主管' " +
+            "         WHEN 4 THEN '教研主管' " +
+            "         WHEN 5 THEN '咨询师' " +
+            "         ELSE '其他' END) AS pos, " +
+            "COUNT(*) AS total " +
+            "FROM emp " +
+            "GROUP BY job " +
+            "ORDER BY total")
+    List<Map<String, Object>> countByJob();
+
+    @Select("SELECT gender, COUNT(*) AS count FROM emp GROUP BY gender")
+    List<Map<String, Object>> countByGender();
 }

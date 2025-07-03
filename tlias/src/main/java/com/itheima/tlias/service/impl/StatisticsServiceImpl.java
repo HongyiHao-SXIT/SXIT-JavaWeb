@@ -1,5 +1,6 @@
 package com.itheima.tlias.service.impl;
 
+import com.itheima.tlias.mapper.EmpMapper;
 import com.itheima.tlias.mapper.StudentMapper;
 import com.itheima.tlias.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,31 +15,55 @@ import java.util.Map;
 public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
+    private EmpMapper empMapper;
+
+    @Autowired
     private StudentMapper studentMapper;
 
     @Override
-    public List<Map<String, Object>> clazzStudentCount() {
-        List<Map<String, Object>> rawList = studentMapper.countByClazz();
-        List<Map<String, Object>> resultList = new ArrayList<>();
+    public Map<String, Object> empJobData() {
+        List<Map<String, Object>> rawList = empMapper.countByJob();
+
+        List<String> jobList = new ArrayList<>();
+        List<Integer> dataList = new ArrayList<>();
+
         for (Map<String, Object> map : rawList) {
-            Map<String, Object> newMap = new HashMap<>();
-            newMap.put("name", map.get("clazzName"));
-            newMap.put("value", map.get("count"));
-            resultList.add(newMap);
+            jobList.add((String) map.get("pos"));
+            dataList.add(((Long) map.get("total")).intValue());
         }
-        return resultList;
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("jobList", jobList);
+        result.put("dataList", dataList);
+
+        return result;
     }
 
     @Override
-    public List<Map<String, Object>> studentDegreeStatistics() {
-        List<Map<String, Object>> rawList = studentMapper.countByDegree();
-        List<Map<String, Object>> resultList = new ArrayList<>();
+    public List<Map<String, Object>> empGenderData() {
+        List<Map<String, Object>> rawList = empMapper.countByGender();
+        List<Map<String, Object>> result = new ArrayList<>();
+
         for (Map<String, Object> map : rawList) {
-            Map<String, Object> newMap = new HashMap<>();
-            newMap.put("name", map.get("degreeName"));
-            newMap.put("value", map.get("count"));
-            resultList.add(newMap);
+            Integer gender = (Integer) map.get("gender");
+            Long count = (Long) map.get("count");
+
+            Map<String, Object> genderMap = new HashMap<>();
+            genderMap.put("name", gender == 1 ? "男性员工" : "女性员工");
+            genderMap.put("value", count);
+            result.add(genderMap);
         }
-        return resultList;
+
+        return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> clazzStudentCount() {
+        return studentMapper.countByClazz();
+    }
+
+    @Override
+    public List<Map<String, Object>> studentDegree() {
+        return studentMapper.countByDegree();
     }
 }

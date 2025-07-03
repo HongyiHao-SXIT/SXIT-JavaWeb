@@ -1,32 +1,34 @@
 package com.itheima.tlias.controller;
 
 import com.itheima.tlias.bean.Result;
-import lombok.extern.slf4j.Slf4j;
+import com.itheima.tlias.utils.MinioUtil;
+import io.minio.MinioClient;
+import io.minio.UploadObjectArgs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
-@Slf4j
 @RestController
 public class UploadController {
-
-    private static final String UPLOAD_DIR = "D:/images/";
+      @Autowired
+      private MinioUtil minioUtil;
     @PostMapping("/upload")
-    public Result upload(MultipartFile file) throws Exception {
-        if (!file.isEmpty()) {
-            String originalFilename = file.getOriginalFilename();
-            String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String uniqueFileName = UUID.randomUUID().toString().replace("-", "") + extName;
-            File targetFile = new File(UPLOAD_DIR + uniqueFileName);
-            if (!targetFile.getParentFile().exists()) {
-                targetFile.getParentFile().mkdirs();
-            }
-            file.transferTo(targetFile);
-            String imageUrl = "/images/" + uniqueFileName;
-            return Result.success(imageUrl);
+    public Result uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            String url = minioUtil.upload(file, file.getOriginalFilename());
+            return Result.success(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error("上传失败");
         }
-        return Result.error("文件为空，上传失败！");
+
     }
+
 }

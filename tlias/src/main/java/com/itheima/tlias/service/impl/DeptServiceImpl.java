@@ -46,15 +46,19 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    @Transactional
-    public void deleteById(Integer id) {
-        long empCount = empMapper.countByDeptId(id);
-        System.out.println("部门ID：" + id + " 下员工数量：" + empCount);
-        if (empCount > 0) {
-            throw new RuntimeException("删除失败！该部门下有员工，无法直接删除");
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Integer id) {
+        Dept dept = deptMapper.getById(id);
+        if (dept == null) {
+            throw new IllegalArgumentException("部门不存在，无法删除");
         }
-        deptMapper.deleteById(id);
-        System.out.println("部门删除成功，ID：" + id);
+
+        long employeeCount = deptMapper.countByDeptId(id);
+        if (employeeCount > 0) {
+            throw new IllegalArgumentException("部门下存在" + employeeCount + "名员工，无法删除");
+        }
+
+        deptMapper.deleteById(id, LocalDateTime.now());
     }
 
 }

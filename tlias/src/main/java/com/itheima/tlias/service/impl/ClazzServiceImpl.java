@@ -1,6 +1,5 @@
 package com.itheima.tlias.service.impl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,11 +23,11 @@ public class ClazzServiceImpl implements ClazzService{
     @Override
     public PageResult page(ClazzQueryParam queryParam) {
         PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize());
-        List<Clazz> clazzList = clazzMapper.list();
+        List<Clazz> clazzList = clazzMapper.list(queryParam);
         PageInfo<Clazz> pageInfo = new PageInfo<>(clazzList);
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
-    
+        
     @Override
     @Transactional
     public void deleteById(Integer id){
@@ -55,7 +54,6 @@ public class ClazzServiceImpl implements ClazzService{
 
     @Override
     public Clazz getById(Integer id) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return clazzMapper.getById(id);
     }
 }
