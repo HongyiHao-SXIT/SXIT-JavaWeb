@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.ReportMapper">
+
+    <select id="getEmpJobData" resultType="java.util.Map">
+        select
+            (case job when 1 then'班主任'
+                   when 2 then'讲师'
+                   when 3 then'学工主管'
+                   when 4 then'校验主管'
+                   when 5 then'咨询师'
+                   else '其他' end)  pos,
+            count(*) total
+        from emp group by job
+                 order by total
+    </select>
+    <select id="getEmpGenderData" resultType="java.util.Map">
+        select count( * )as value,
+       (case gender
+            when 1 then'男'
+            when 2 then'女'
+            else '未知' end)  as name
+        from emp group by gender
+        order by value desc
+    </select>
+    <select id="selectAll" resultType="Emp"> SELECT * FROM emp </select>
+    <select id="getEmpstudentDegreeData" resultType="java.util.Map">
+        SELECT
+            CASE degree
+                WHEN 1 THEN '初中'
+                WHEN 2 THEN '高中'
+                WHEN 3 THEN '大专'
+                WHEN 4 THEN '本科'
+                WHEN 5 THEN '硕士'
+                WHEN 6 THEN '博士'
+                END AS name,
+            COUNT(*) AS value
+        FROM student
+        GROUP BY degree
+        ORDER BY degree
+    </select>
+    <select id="countStudentClazzData" resultType="java.util.Map">
+SELECT
+    clazz.name AS clazzId, COUNT(*)
+        AS total
+FROM student
+    join clazz on student.clazz_id = clazz.id
+GROUP BY clazz_id
+</select>
+</mapper>

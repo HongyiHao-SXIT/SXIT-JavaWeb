@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itheima.mapper.StudentMapper">
+
+    <resultMap id="StudentWithClazzResultMap" type="com.itheima.pojo.Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="no" column="no"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="degree" column="degree"/>
+        <result property="idCard" column="id_card"/>
+        <result property="isCollege" column="is_college"/>
+        <result property="address" column="address"/>
+        <result property="graduationDate" column="graduation_date"/>
+        <result property="violationCount" column="violation_count"/>
+        <result property="violationScore" column="violation_score"/>
+        <result property="clazzId" column="clazz_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="clazzName" column="clazz_name"/>
+    </resultMap>
+
+    <select id="list" resultType="Student">
+        SELECT s.*, c.name AS clazzName
+        FROM student s
+        LEFT JOIN clazz c ON s.clazz_id = c.id
+        order by violation_count desc
+        <where>
+            <if test="name != null and name != ''">
+                AND s.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+
+            <if test="degree != null">
+                AND s.degree = #{degree}
+            </if>
+
+            <if test="clazzId != null and clazzId != ''">
+                AND s.clazz_id = #{clazzId}
+            </if>
+        </where>
+    </select>
+
+
+    <update id="updateById">
+        update student
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="no != null and no != ''">no = #{no},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="gender != null and gender != ''">gender = #{gender},</if>
+            <if test="degree != null">degree = #{degree},</if>
+            <if test="idCard != null and idCard != ''">id_card = #{idCard},</if>
+            <if test="isCollege != null">is_college = #{isCollege},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="graduationDate != null ">graduation_date = #{graduationDate},</if>
+            <if test="violationCount != null">violation_count = #{violationCount},</if>
+            <if test="violationScore != null">violation_score = #{violationScore},</if>
+            <if test="clazzId != null">clazz_id = #{clazzId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="updateViolation">
+        update student
+        <set>
+            violation_count = violation_count + 1,
+            violation_score = violation_score + #{score}
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByIds" >
+            delete from student where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </delete>
+
+    <select id="countStudentClazzData" resultType="java.util.Map">
+            SELECT
+                clazz.name AS clazzId,
+                COUNT(*) AS total
+            FROM student join clazz on student.clazz_id = clazz.id
+            GROUP BY clazz_id
+    </select>
+</mapper>

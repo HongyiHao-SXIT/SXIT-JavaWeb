@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itheima.mapper.ClazzMapper">
+
+    <resultMap id="ClazzDTOWithMasterResultMap" type="com.itheima.pojo.Clazz">
+        <id property="id" column="clazz_id"/>
+        <result property="name" column="clazz_name"/>
+        <result property="room" column="room"/>
+        <result property="beginDate" column="begin_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="masterId" column="master_id"/>
+        <result property="createTime" column="clazz_create_time"/>
+        <result property="updateTime" column="clazz_update_time"/>
+        <result property="masterName" column="clazz_masterName "/>
+    </resultMap>
+
+   <select id="getClazzWithMaster" resultMap="ClazzDTOWithMasterResultMap">
+     SELECT
+       c.id AS clazz_id,
+        c.name AS clazz_name,
+         c.room,
+         c.begin_date,
+         c.end_date,
+          c.master_id,
+       c.subject,
+          c.create_time AS clazz_create_time,
+          c.update_time AS clazz_update_time,
+
+          e.name AS clazz_masterName &#45;&#45; 只保留班主任姓名-->
+    FROM clazz c
+              LEFT JOIN emp e ON c.master_id = e.id
+
+</select>
+
+    <select id="list" resultType="Clazz">
+        SELECT
+        c.id,
+        c.name,
+        c.room,
+        c.begin_date as beginDate,
+        c.end_date as endDate,
+        c.master_id,
+        c.subject,
+        c.create_time,
+        c.update_time as  updateTime,
+        e.name AS masterName,
+        CASE
+        WHEN CURDATE()  &gt; c.end_date THEN '已结课'
+        WHEN CURDATE()  &lt; c.begin_date THEN '未开班'
+        ELSE '在读中'
+        END AS status
+        FROM clazz c
+        LEFT JOIN emp e ON c.master_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                c.name like concat('%',#{name},'%')
+            </if>
+            <if test="begin != null and end != null">
+                and c.end_date  between #{begin} and #{end}
+            </if>
+        </where>
+    </select>
+   <update id="updateById">
+    update clazz
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="room != null">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+    where id=#{id}
+    </update>
+</mapper>
